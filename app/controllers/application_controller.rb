@@ -2,9 +2,17 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  helper :all # include all helpers, all the time
+  
+  helper :all
+  helper_method :logged_in_user
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
+  
+  filter_parameter_logging :password
+  
+  protected
+  
+  def logged_in_user
+    User.first
+  end
+  
 end

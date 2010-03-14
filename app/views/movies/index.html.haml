@@ -1,0 +1,6 @@
+= render :partial => 'movies/search_form'
+
+- if @movies
+  - @movies.each do |movie|
+    - content = render movie
+    = link_to_create_movie_or_new_ranking content, movie

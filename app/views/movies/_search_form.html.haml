@@ -1,0 +1,3 @@
+- form_tag search_movies_path, :method => :get do
+  = text_field_tag :title, params[:title]
+  = submit_tag :search

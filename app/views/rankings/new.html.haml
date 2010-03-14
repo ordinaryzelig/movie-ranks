@@ -1,0 +1,7 @@
+- form_for @ranking do |f|
+  = @movie.title
+  %br
+  = f.label :position_requested, 'rank'
+  = f.text_field :position_requested
+  = f.hidden_field :movie_id
+  = f.submit

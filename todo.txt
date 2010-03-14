@@ -1,0 +1,11 @@
+search for movie
+
+binary ranking
+    better/worse
+
+weight rankings by how many movies user has.
+
+drag-drop ranking.
+
+tags
+    ranking among others with tag
