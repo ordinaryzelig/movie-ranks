@@ -10,4 +10,6 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :rankings, :only => [:index]
   end
   
+  map.connect 'javascripts/:action.js', :controller => :javascripts, :format => :js
+  
 end

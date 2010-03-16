@@ -9,15 +9,18 @@ class RankingsController < ApplicationController
   
   def new
     if @movie
-      @ranking = Ranking.new(:movie_id => @movie.id)
+      if first_ranking?
+        create_from_attributes(:movie_id => @movie.id)
+      else
+        @ranking = logged_in_user.rankings.new(:movie_id => @movie.id)
+      end
     else
       render :template => 'movies/index'
     end
   end
   
   def create
-    ranking = logged_in_user.rankings.create!(params[:ranking])
-    redirect_to user_rankings_path(ranking.user)
+    create_from_attributes(params[:ranking])
   end
   
   private
@@ -28,6 +31,15 @@ class RankingsController < ApplicationController
   
   def load_movie
     @movie = Movie.find_by_id(params[:movie_id])
+  end
+  
+  def create_from_attributes(atts)
+    ranking = logged_in_user.rankings.create!(atts)
+    redirect_to user_rankings_path(ranking.user)
+  end
+  
+  def first_ranking?
+    logged_in_user.rankings.empty?
   end
   
 end

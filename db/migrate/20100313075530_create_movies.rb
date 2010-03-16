@@ -4,7 +4,7 @@ class CreateMovies < ActiveRecord::Migration
     create_table :movies do |t|
       t.string :title, :null => false
       t.string :imdb_id, :null => false
-      t.integer :year, :null => false
+      t.integer :year
       t.timestamps
     end
     add_index :movies, :title

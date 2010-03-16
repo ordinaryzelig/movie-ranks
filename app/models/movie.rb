@@ -9,7 +9,6 @@ class Movie < ActiveRecord::Base
   
   validates_presence_of :title
   validates_presence_of :imdb_id
-  validates_presence_of :year
   
   # wrapper for Imdb.search_movies_by_title that always returns an array.
   def self.search_imdb(title)

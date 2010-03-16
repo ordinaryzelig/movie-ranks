@@ -16,9 +16,11 @@ class RankingsControllerTest < ActionController::TestCase
   end
   
   def test_new_with_movie_renders_ranking_form
-    login_as User.make
+    user = User.make
+    login_as user
+    user.rankings.make
     movie = Movie.make
-    get :new, :movie_id => movie.to_param
+    get :new, :movie_id => movie.id
     assert_template 'new'
   end
   
@@ -30,6 +32,16 @@ class RankingsControllerTest < ActionController::TestCase
     post :create, :user_id => user.to_param, :ranking => ranking.attributes
     assert_redirected_to user_rankings_path(user)
     assert Ranking.find_by_user_id_and_movie_id(user, movie)
+  end
+  
+  def test_first_new_ranking_automatically_creates
+    user = User.make
+    login_as user
+    movie = Movie.make
+    assert_difference('user.reload.rankings.size') do
+      get :new, :movie_id => movie.id
+    end
+    assert_redirected_to user_rankings_path(user)
   end
   
 end

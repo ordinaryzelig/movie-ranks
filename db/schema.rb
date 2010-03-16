@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(:version => 20100313080937) do
   create_table "movies", :force => true do |t|
     t.string   "title",      :null => false
     t.string   "imdb_id",    :null => false
-    t.integer  "year",       :null => false
+    t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

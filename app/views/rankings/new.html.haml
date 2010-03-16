@@ -1,7 +1,15 @@
-- form_for @ranking do |f|
-  = @movie.title
-  %br
-  = f.label :position_requested, 'rank'
-  = f.text_field :position_requested
-  = f.hidden_field :movie_id
-  = f.submit
+- jquery
+- more_javascripts('new_ranking')
+
+#movie_to_rank{:value => @movie.id}= render @movie
+
+#is is
+
+= link_to 'better', '#', :id => 'better'
+= link_to 'worse', '#', :id => 'worse'
+
+#than than
+
+#movie_to_compare
+  .title
+  .year

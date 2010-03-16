@@ -1,0 +1,50 @@
+var rankings = new Array();
+
+var rank_index = 0;
+var title_index = 1;
+var year_index = 2;
+
+<% @rankings.each do |ranking| %>
+  rankings.push(new Array(<%= ranking.rank %>, "<%= escape_javascript(ranking.movie.title) %>", <%= ranking.movie.year || '\'\'' %>));
+<% end %>
+
+var lower_limit = 0;
+var upper_limit = rankings.length - 1;
+
+function mid_point() {
+  return parseInt((lower_limit + upper_limit) / 2);
+}
+
+function compare_with_movie_ranked(rank){
+  var ranking = rankings[rank];
+  $('#movie_to_compare > .title').html(ranking[title_index]);
+  $('#movie_to_compare > .year').html(ranking[year_index].toString());
+}
+
+function add_better_worse_ajax() {
+  $('#better').click(function(event) {
+    lower_limit = mid_point();
+    // movie_compared(upper_limit, event);
+  });
+  $('#worse').click(function(event) {
+    upper_limit = mid_point();
+    movie_compared(lower_limit - 1, event);
+  });
+}
+
+function movie_compared (rank, event) {
+  compare_with_movie_ranked(mid_point());
+  event.preventDefault();
+  var no_more_to_compare = lower_limit == upper_limit;
+  if (no_more_to_compare) {
+    // todo: disable links so they don't submit again.
+    var movie_to_rank = $('#movie_to_rank').attr('value');
+    $.post('/rankings', { ranking: {movie_id: movie_to_rank, position_requested: rank} });
+    window.location.replace("<%= user_rankings_path(logged_in_user) %>");
+  };
+}
+
+$(document).ready(function(){
+  compare_with_movie_ranked(mid_point());
+  add_better_worse_ajax();
+});
