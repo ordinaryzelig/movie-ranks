@@ -7,6 +7,7 @@ class ActiveSupport::TestCase
   
   def setup
     Sham.reset
+    Imdb.use_without_internet = false
   end
   
   def login_as(user)

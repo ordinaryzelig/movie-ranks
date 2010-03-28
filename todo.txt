@@ -1,7 +1,9 @@
-search for movie
+create rake task that tests without internet.
 
 binary ranking
-    better/worse
+    i think it needs 1 less click to post create.
+    comparison to first and last needs to be tested.
+        best movie ever should be 1, worst movie should be last + 1.
 
 weight rankings by how many movies user has.
 

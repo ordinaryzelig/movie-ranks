@@ -6,6 +6,7 @@ class Movie < ActiveRecord::Base
   
   default_scope :order => 'title'
   named_scope :with_imdb_ids, proc { |*imdb_ids| {:conditions => "imdb_id in (#{imdb_ids.map { |imdb_id| "'#{imdb_id}'" }.join(', ')})"} }
+  named_scope :title_like, proc { |title| {:conditions => "lower(title) like '%#{title.downcase}%'"} }
   
   validates_presence_of :title
   validates_presence_of :imdb_id
