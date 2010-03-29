@@ -1,13 +1,9 @@
-create rake task that tests without internet.
+here:
+    i think ranking is working now.  should look into testing.
 
-binary ranking
-    i think it needs 1 less click to post create.
-    comparison to first and last needs to be tested.
-        best movie ever should be 1, worst movie should be last + 1.
+handle attempt to rank movie already ranked.
 
-weight rankings by how many movies user has.
-
-drag-drop ranking.
+best movie ever should be 1, worst movie should be last + 1.
 
 tags
     ranking among others with tag

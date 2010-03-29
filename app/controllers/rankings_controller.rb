@@ -33,9 +33,13 @@ class RankingsController < ApplicationController
     @movie = Movie.find_by_id(params[:movie_id])
   end
   
+  # TODO: make sure we're not making any unnecessary redirect requests after creation.
   def create_from_attributes(atts)
     ranking = logged_in_user.rankings.create!(atts)
-    redirect_to user_rankings_path(ranking.user)
+    respond_to do |if_format_is|
+      if_format_is.html { redirect_to user_rankings_path(ranking.user) }
+      if_format_is.js { render :nothing => true }
+    end
   end
   
   def first_ranking?

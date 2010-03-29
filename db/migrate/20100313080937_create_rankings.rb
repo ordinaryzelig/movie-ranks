@@ -5,7 +5,8 @@ class CreateRankings < ActiveRecord::Migration
       t.integer :movie_id, :null => false
       t.integer :user_id, :null => false
       t.integer :position
-      t.timestamps
+      # updated at would make acts_as_list slower than necessary.
+      t.datetime :created_at
     end
   end
   

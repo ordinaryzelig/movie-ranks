@@ -4,47 +4,86 @@ var rank_index = 0;
 var title_index = 1;
 var year_index = 2;
 
+// create javascript version of @rankings array.
 <% @rankings.each do |ranking| %>
   rankings.push(new Array(<%= ranking.rank %>, "<%= escape_javascript(ranking.movie.title) %>", <%= ranking.movie.year || '\'\'' %>));
 <% end %>
 
-var lower_limit = 0;
-var upper_limit = rankings.length - 1;
-
-function mid_point() {
-  return parseInt((lower_limit + upper_limit) / 2);
+// mid point between upper and lower limit.
+// parseInt rounds down.
+function mid_point () {
+  return parseInt(rankings.length / 2);
 }
 
-function compare_with_movie_ranked(rank){
-  var ranking = rankings[rank];
-  $('#movie_to_compare > .title').html(ranking[title_index]);
-  $('#movie_to_compare > .year').html(ranking[year_index].toString());
+var rank_of_movie_being_compared_to;
+function compare_next_movie (){
+  var ranking = rankings[mid_point()];
+  rank_of_movie_being_compared_to = ranking[rank_index];
+  var title = ranking[title_index];
+  var year = ranking[year_index].toString();
+  $('#movie_to_compare > .title').html(title);
+  $('#movie_to_compare > .year').html(year);
 }
 
-function add_better_worse_ajax() {
+// comparisons.
+var better = 1;
+var worse = -1;
+
+function add_ajax_to_better_worse_links () {
+  // set new limits, and call do_comparison() callback.
   $('#better').click(function(event) {
-    lower_limit = mid_point();
-    // movie_compared(upper_limit, event);
+    do_comparison(better, event);
   });
   $('#worse').click(function(event) {
-    upper_limit = mid_point();
-    movie_compared(lower_limit - 1, event);
+    do_comparison(worse, event);
   });
 }
 
-function movie_compared (rank, event) {
-  compare_with_movie_ranked(mid_point());
+// callback after better or worse link is clicked.
+function do_comparison (comparison, event) {
   event.preventDefault();
-  var no_more_to_compare = lower_limit == upper_limit;
-  if (no_more_to_compare) {
-    // todo: disable links so they don't submit again.
-    var movie_to_rank = $('#movie_to_rank').attr('value');
-    $.post('/rankings', { ranking: {movie_id: movie_to_rank, position_requested: rank} });
+  if (rankings.length == 1) {
+    // create ranking for this movie.
+    // TODO: disable links so they don't submit again.
+    var movie_id_to_rank = $('#movie_to_rank').attr('value');
+    var position_requested;
+    switch(comparison) {
+      case better:
+        position_requested = rank_of_movie_being_compared_to;
+        break;
+      case worse:
+        position_requested = rank_of_movie_being_compared_to + 1;
+        break;
+    }
+    // TODO: make sure we're not making any unnecessary redirect requests after creation.
+    $.post('/rankings', { ranking: {movie_id: movie_id_to_rank, position_requested: position_requested} });
+    // redirect.
     window.location.replace("<%= user_rankings_path(logged_in_user) %>");
-  };
+  }
+  else {
+    switch(comparison) {
+      case better:
+        // from end of rankings array, remove every ranking lower than or equal to rank_of_movie_being_compared_to.
+        var last_ranking = rankings[rankings.length - 1];
+        while(last_ranking[rank_index] >= rank_of_movie_being_compared_to) {
+          rankings.pop();
+          last_ranking = rankings[rankings.length - 1];
+        }
+        break;
+      case worse:
+        // from beginning of rankings array, remove every ranking higher than or equal to rank_of_movie_being_compared_to.
+        var first_ranking = rankings[0];
+        while(first_ranking[rank_index] <= rank_of_movie_being_compared_to) {
+          rankings.shift();
+          first_ranking = rankings[0];
+        }
+        break;
+    }
+    compare_next_movie();
+  }
 }
 
 $(document).ready(function(){
-  compare_with_movie_ranked(mid_point());
-  add_better_worse_ajax();
+  compare_next_movie();
+  add_ajax_to_better_worse_links();
 });
