@@ -18,4 +18,12 @@ class MoviesControllerTest < ActionController::TestCase
     assert Movie.find_by_imdb_id(Movie::Zelig_imdb_id)
   end
   
+  def test_index_with_tag
+    tag = Tag.make
+    movies = tag.movies << Movie.make
+    get :index, :tag_id => tag.to_param
+    assert_equal tag, assigns(:tag)
+    assert_equal movies, assigns(:movies)
+  end
+  
 end

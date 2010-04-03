@@ -9,6 +9,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users do |user|
     user.resources :rankings, :only => [:index]
   end
+  map.resources :tags do |tag|
+    tag.resources :movies, :only => [:index]
+  end
   
   map.connect 'javascripts/:action.js', :controller => :javascripts, :format => :js
   

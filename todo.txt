@@ -1,9 +1,5 @@
 here:
-    i think ranking is working now.  should look into testing.
-
-handle attempt to rank movie already ranked.
-
-best movie ever should be 1, worst movie should be last + 1.
-
+    layout css
+    movies show for user with tags or overall
 tags
     ranking among others with tag

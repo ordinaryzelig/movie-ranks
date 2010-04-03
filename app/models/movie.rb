@@ -1,6 +1,7 @@
 class Movie < ActiveRecord::Base
   
   has_many :rankings, :extend => ArrayBinary
+  has_and_belongs_to_many :tags
   
   attr_accessor :is_mock
   

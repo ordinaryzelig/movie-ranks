@@ -18,4 +18,8 @@ module ApplicationHelper
     end
   end
   
+  def stylesheets
+    stylesheet_link_tag 'layout', controller_name
+  end
+  
 end
