@@ -1,15 +1,14 @@
 - jquery
 - more_javascripts('new_ranking')
 
-#movie_to_rank{:value => @movie.id}= render @movie
+= render_movie(@movie, :id => 'movie_to_rank', :value => @movie.id)
 
 #is is
 
-= link_to 'better', '#', :id => 'better'
-= link_to 'worse', '#', :id => 'worse'
+#better_worse
+  #better= 'better'
+  #worse= 'worse'
 
 #than than
 
-#movie_to_compare
-  .title
-  .year
+= render_movie(Movie.new, :id => 'movie_to_compare')

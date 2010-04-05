@@ -22,4 +22,9 @@ module ApplicationHelper
     stylesheet_link_tag 'layout', controller_name
   end
   
+  def render_movie(movie, options = {})
+    options[:id] ||= dom_id(movie)
+    render(:partial => 'movies/movie', :object => movie, :locals => {:options => options})
+  end
+  
 end

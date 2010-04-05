@@ -22,7 +22,7 @@ function compare_next_movie (){
   var title = ranking[title_index];
   var year = ranking[year_index].toString();
   $('#movie_to_compare > .title').html(title);
-  $('#movie_to_compare > .year').html(year);
+  $('#movie_to_compare > .year').html('(' + year + ')');
 }
 
 // comparisons.

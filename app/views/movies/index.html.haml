@@ -2,5 +2,7 @@
 
 - if @movies
   - @movies.each do |movie|
-    - content = render movie
+    - content = movie.title
+    - content += " (#{movie.year})" if movie.year
     = link_to_create_movie_or_new_ranking content, movie
+    %br

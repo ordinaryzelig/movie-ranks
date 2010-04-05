@@ -3,3 +3,4 @@ here:
     movies show for user with tags or overall
 tags
     ranking among others with tag
+after comparison, use appropriate effect for switching old movie to new movie

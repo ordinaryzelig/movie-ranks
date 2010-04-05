@@ -1,2 +1,9 @@
 body {
   font-family: helvetica; }
+
+a {
+  color: blue; }
+
+a:hover {
+  text-decoration: underline;
+  cursor: pointer; }

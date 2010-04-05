@@ -4,7 +4,7 @@
 %html{html_attrs}
   %head
     %title= 'movie ranks'
-    = stylesheet_link_tag 'screen', :cache => true
+    = stylesheets
     = yield :jquery
     = javascripts
     = yield :more_javascripts
@@ -12,21 +12,5 @@
   %body
     #banner
       = link_to 'movie ranks', root_path
-    / #logged_in_player
-    /   - if logged_in?
-    /     - if logged_in_player
-    /       %div
-    /         hi
-    /         %span.name= logged_in_player.name
-    /       = link_to 'see your picks', player_picks_path(logged_in_player)
-    /       - if admin_config.picks_editable
-    /         = link_to 'change your picks', player_edit_picks_path(logged_in_player)
-    /       = link_to 'edit your profile', edit_player_path(logged_in_player)
-    /     - elsif logged_in_as_admin?
-    /       admin logged in
-    /       %br
-    /     = "#{link_to 'logout', logout_path}"
-    /   - else
-    /     = link_to 'login', login_path
     #main
       = yield

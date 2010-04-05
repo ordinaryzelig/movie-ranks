@@ -1,0 +1,15 @@
+div {
+  border: 1px solid black; }
+
+.movie {
+  text-align: center; }
+  .movie .title {
+    font-size: 2em; }
+
+#is, #better, #worse, #than {
+  font-size: 1.5em; }
+
+.movie, #is, #better_worse, #than {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 3mm; }
