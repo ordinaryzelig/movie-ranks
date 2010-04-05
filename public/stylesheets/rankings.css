@@ -1,10 +1,12 @@
-div {
-  border: 1px solid black; }
-
 .movie {
-  text-align: center; }
+  text-align: center;
+  border: 1px solid black;
+  padding: 2mm;
+  font-weight: bold;
+  background: yellow; }
   .movie .title {
-    font-size: 2em; }
+    font-size: 2em;
+    text-shadow: white 0px 1px 0px; }
 
 #is, #better, #worse, #than {
   font-size: 1.5em; }
@@ -13,3 +15,16 @@ div {
   display: inline-block;
   vertical-align: middle;
   margin: 3mm; }
+
+#better, #worse {
+  color: white;
+  margin: 2mm;
+  border-width: 3px; }
+
+#better {
+  background: green;
+  border-color: green; }
+
+#worse {
+  background: red;
+  border-color: darkred; }

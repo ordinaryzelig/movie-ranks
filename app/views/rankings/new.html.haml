@@ -1,4 +1,3 @@
-- jquery
 - more_javascripts('new_ranking')
 
 = render_movie(@movie, :id => 'movie_to_rank', :value => @movie.id)
@@ -6,8 +5,9 @@
 #is is
 
 #better_worse
-  #better= 'better'
-  #worse= 'worse'
+  %button#better= 'better'
+  %br
+  %button#worse= 'worse'
 
 #than than
 

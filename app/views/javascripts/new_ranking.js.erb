@@ -6,46 +6,46 @@ var year_index = 2;
 
 // create javascript version of @rankings array.
 <% @rankings.each do |ranking| %>
-  rankings.push(new Array(<%= ranking.rank %>, "<%= escape_javascript(ranking.movie.title) %>", <%= ranking.movie.year || '\'\'' %>));
+  rankings.push(new Array(<%= ranking.rank %>, "<%= escape_javascript(ranking.movie.title) %>", <%= ranking.movie.year || "\"\"" %>));
 <% end %>
 
 // mid point between upper and lower limit.
 // parseInt rounds down.
-function mid_point () {
+function mid_point() {
   return parseInt(rankings.length / 2);
 }
 
 var rank_of_movie_being_compared_to;
-function compare_next_movie (){
+function compare_next_movie(){
   var ranking = rankings[mid_point()];
   rank_of_movie_being_compared_to = ranking[rank_index];
   var title = ranking[title_index];
   var year = ranking[year_index].toString();
-  $('#movie_to_compare > .title').html(title);
-  $('#movie_to_compare > .year').html('(' + year + ')');
+  $("#movie_to_compare > .title").html(title);
+  $("#movie_to_compare > .year").html("(" + year + ")");
 }
 
 // comparisons.
 var better = 1;
 var worse = -1;
 
-function add_ajax_to_better_worse_links () {
+function add_ajax_to_better_worse_links() {
   // set new limits, and call do_comparison() callback.
-  $('#better').click(function(event) {
+  $("#better").click(function(event) {
     do_comparison(better, event);
   });
-  $('#worse').click(function(event) {
+  $("#worse").click(function(event) {
     do_comparison(worse, event);
   });
 }
 
 // callback after better or worse link is clicked.
-function do_comparison (comparison, event) {
+function do_comparison(comparison, event) {
   event.preventDefault();
   if (rankings.length == 1) {
     // create ranking for this movie.
-    // TODO: disable links so they don't submit again.
-    var movie_id_to_rank = $('#movie_to_rank').attr('value');
+    // TODO: disable links so they don"t submit again.
+    var movie_id_to_rank = $("#movie_to_rank").attr("value");
     var position_requested;
     switch(comparison) {
       case better:
@@ -55,8 +55,8 @@ function do_comparison (comparison, event) {
         position_requested = rank_of_movie_being_compared_to + 1;
         break;
     }
-    // TODO: make sure we're not making any unnecessary redirect requests after creation.
-    $.post('/rankings', { ranking: {movie_id: movie_id_to_rank, position_requested: position_requested} });
+    // TODO: make sure we"re not making any unnecessary redirect requests after creation.
+    $.post("/rankings", { ranking: {movie_id: movie_id_to_rank, position_requested: position_requested} });
     // redirect.
     window.location.replace("<%= user_rankings_path(logged_in_user) %>");
   }
