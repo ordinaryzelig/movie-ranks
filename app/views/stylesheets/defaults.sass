@@ -1,0 +1,23 @@
+a
+  color: blue
+  text-decoration: none
+a:hover
+  text-decoration: underline
+  cursor: pointer
+
+button
+  padding: 5px
+  cursor: pointer
+  text-shadow: black 0px -2px 0px
+  border-style: solid
+  border-width: 1px 3px 3px 1px
+  border-color: gray black black gray
+  margin: 2mm
+button:active
+  / swap black and gray.
+  border-color: black gray gray black
+  / +1px to top and left, -1px to right and bottom.
+  border-width: 2px 2px 2px 2px
+  / scooch text down 1px.
+  / need to scooch left 1px too to compensate for border.
+  padding: 6px 6px 4px 4px

@@ -19,16 +19,3 @@ button:active {
   border-color: black gray gray black;
   border-width: 2px 2px 2px 2px;
   padding: 6px 6px 4px 4px; }
-
-body {
-  font-family: helvetica; }
-
-#banner {
-  font-size: 4em;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 30px; }
-  #banner a {
-    color: red; }
-  #banner a:hover {
-    text-decoration: none; }
