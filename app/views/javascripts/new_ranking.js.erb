@@ -42,7 +42,7 @@ function add_ajax_to_better_worse_links() {
 // callback after better or worse link is clicked.
 function do_comparison(comparison, event) {
   event.preventDefault();
-  if (rankings.length == 1) {
+  if (rankings.length == 1 || (rankings.length == 2 && comparison == worse)) {
     // create ranking for this movie.
     // TODO: disable links so they don"t submit again.
     var movie_id_to_rank = $("#movie_to_rank").attr("value");
