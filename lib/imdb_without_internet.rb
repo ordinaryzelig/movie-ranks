@@ -9,7 +9,7 @@ class Imdb
   
   class << self
     
-    attr_accessor :use_without_internet
+    attr_reader :use_without_internet
     
     def use_without_internet=(bool)
       @use_without_internet = bool

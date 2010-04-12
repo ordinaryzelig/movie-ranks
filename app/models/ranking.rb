@@ -7,15 +7,18 @@ class Ranking < ActiveRecord::Base
   attr_accessor :position_requested
   
   default_scope :order => :position
-  named_scope :for_tags, :conditions => "#{Ranking.table_name}.tag_id is not null"
+  # if tag is nil. will return overall.
+  named_scope :for_tag, proc { |tag| {:conditions => {:tag_id => tag ? tag.id : nil}} }
   named_scope :overall, :conditions => {:tag_id => nil}
+  named_scope :for_movie, proc { |movie| {:conditions => {:movie_id => movie.id}} }
   
   validates_presence_of :movie_id
   validates_presence_of :user_id
   
   after_create :insert_at_position_requested, :if => :position_requested
   
-  acts_as_list :scope => :user_id
+  # scope user_id and tag_id columns.
+  acts_as_list :scope => 'user_id = #{user_id} AND #{tag_id ? "tag_id = #{tag_id}" : "tag_id is null"}'
   
   # alias rank position.
   def rank

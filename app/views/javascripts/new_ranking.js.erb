@@ -43,9 +43,6 @@ function add_ajax_to_better_worse_links() {
 function do_comparison(comparison, event) {
   event.preventDefault();
   if (rankings.length == 1 || (rankings.length == 2 && comparison == worse)) {
-    // create ranking for this movie.
-    // TODO: disable links so they don"t submit again.
-    var movie_id_to_rank = $("#movie_to_rank").attr("value");
     var position_requested;
     switch(comparison) {
       case better:
@@ -55,10 +52,7 @@ function do_comparison(comparison, event) {
         position_requested = rank_of_movie_being_compared_to + 1;
         break;
     }
-    // TODO: make sure we"re not making any unnecessary redirect requests after creation.
-    $.post("/rankings", { ranking: {movie_id: movie_id_to_rank, position_requested: position_requested} });
-    // redirect.
-    window.location.replace("<%= user_rankings_path(logged_in_user) %>");
+    create_ranking(position_requested);
   }
   else {
     switch(comparison) {
@@ -81,6 +75,15 @@ function do_comparison(comparison, event) {
     }
     compare_next_movie();
   }
+}
+
+// TODO: disable links so they don"t submit again.
+// TODO: disable links to make sure we"re not making any unnecessary redirect requests after creation.
+function create_ranking (position_requested) {
+  var movie_to_rank = $("#movie_to_rank");
+  $.post("/rankings", { ranking: {movie_id: movie_to_rank.attr("movie_id"), tag_id: movie_to_rank.attr("tag_id"), position_requested: position_requested} });
+  <% redirect_path = @tag ? user_tag_rankings_path(logged_in_user, @tag) : user_rankings_path(logged_in_user) %>
+  window.location.replace("<%= redirect_path %>");
 }
 
 $(document).ready(function(){

@@ -5,14 +5,22 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :movies, :only => [:create, :index], :collection => {:search => :get} do |movie|
     movie.resources :rankings, :only => [:new]
   end
+  
   map.resources :rankings
+  
   map.resources :users do |user|
     user.resources :rankings, :only => [:index]
-  end
-  map.resources :tags do |tag|
-    tag.resources :movies, :only => [:index]
+    user.resources :tags do |tag|
+      tag.resources :rankings, :only => [:index, :new]
+    end
   end
   
-  map.connect 'javascripts/:action.js', :controller => :javascripts, :format => :js
+  map.resources :tags do |tag|
+    tag.resources :movies, :only => [:index], :collection => {:search => :get} do |movie|
+      movie.resources :rankings, :only => [:new]
+    end
+  end
+  
+  map.javascripts 'javascripts/:action.js', :controller => :javascripts, :format => :js
   
 end

@@ -4,5 +4,8 @@
   - @movies.each do |movie|
     - content = movie.title
     - content += " (#{movie.year})" if movie.year
-    = link_to_create_movie_or_new_ranking content, movie
+    - if @tag
+      = link_to content, new_tag_movie_ranking_path(@tag, movie)
+    - else
+      = link_to_create_movie_or_new_ranking content, movie
     %br

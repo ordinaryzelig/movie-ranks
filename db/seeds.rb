@@ -122,6 +122,14 @@
 end
 
 me = User.create! :name => 'jared'
-Movie.all(:order => 'created_at').each do |movie|
+
+# rank first 20 movies.
+Movie.all(:order => 'created_at', :limit => 20).each do |movie|
   me.rankings.create!(:movie => movie)
+end
+
+# rank last 10 comedies.
+comedy = Tag.find_by_name!('comedy')
+comedy.movies.all[-10..-1].each do |movie|
+  me.rankings.create!(:movie => movie, :tag => comedy)
 end

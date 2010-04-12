@@ -15,4 +15,8 @@ class ApplicationController < ActionController::Base
     User.first
   end
   
+  def load_tag
+    @tag = Tag.find_by_name!(params[:tag_id], :include => :movies) if params[:tag_id]
+  end
+  
 end

@@ -26,4 +26,12 @@ class MoviesControllerTest < ActionController::TestCase
     assert_equal movies, assigns(:movies)
   end
   
+  def test_search_with_tag
+    tag = Tag.make
+    movie = Movie.make
+    movie.tags << tag
+    get :search, :title => movie.title, :tag_id => tag.to_param
+    assert_equal [movie], assigns(:movies)
+  end
+  
 end

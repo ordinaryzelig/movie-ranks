@@ -8,12 +8,12 @@ class MovieTest < ActiveSupport::TestCase
     assert movies.detect { |hash| hash[:imdb_id] == movie.imdb_id }
   end
   
-  def test_find_all_by_imdb_id_or_mock
+  def test_find_all_by_imdb_ids_or_mock
     existing = Movie.make
     non_existent = Movie.search_imdb('Zelig')[0, 1]
     mocked = non_existent.map { |imdb_hash| Movie.new_mock(imdb_hash) }
     expected = ([existing] + mocked).map(&:imdb_id).sort
-    tested = Movie.find_all_by_imdb_id_or_mock([existing.attributes] + non_existent).map(&:imdb_id).sort
+    tested = Movie.send(:find_all_by_imdb_ids_or_mock, [existing.attributes] + non_existent).map(&:imdb_id).sort
     assert_equal expected, tested
   end
   

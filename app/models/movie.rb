@@ -25,16 +25,8 @@ class Movie < ActiveRecord::Base
     end
   end
   
-  def self.find_all_by_imdb_id_or_mock(imdb_hashes)
-    imdb_ids = imdb_hashes.map { |imdb_hash| imdb_hash[:imdb_id] }
-    found = Movie.with_imdb_ids(*imdb_ids)
-    imdb_hashes.map do |imdb_hash|
-      found.detect { |movie| movie.imdb_id == imdb_hash[:imdb_id]} || Movie.new_mock(imdb_hash)
-    end
-  end
-  
   def self.find_all_by_title_or_mock(title)
-    find_all_by_imdb_id_or_mock(search_imdb(title))
+    find_all_by_imdb_ids_or_mock(search_imdb(title))
   end
   
   def self.new_mock(atts = {})
@@ -44,6 +36,20 @@ class Movie < ActiveRecord::Base
   def self.create_from_imdb_id(imdb_id)
     imdb_movie = Imdb.find_movie_by_id(imdb_id)
     create! imdb_movie.attributes_for(:title, :imdb_id, :year)
+  end
+  
+  class << self
+    
+    private
+    
+    def find_all_by_imdb_ids_or_mock(imdb_hashes)
+      imdb_ids = imdb_hashes.map { |imdb_hash| imdb_hash[:imdb_id] }
+      found = Movie.with_imdb_ids(*imdb_ids)
+      imdb_hashes.map do |imdb_hash|
+        found.detect { |movie| movie.imdb_id == imdb_hash[:imdb_id]} || Movie.new_mock(imdb_hash)
+      end
+    end
+    
   end
   
 end

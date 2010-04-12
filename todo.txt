@@ -1,5 +1,2 @@
 here:
-    layout css
-    movies show for user with tags or overall
-tags
-    ranking among others with tag
+    movies already ranked

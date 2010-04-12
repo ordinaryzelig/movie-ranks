@@ -1,6 +1,6 @@
-- more_javascripts('new_ranking')
+- more_javascript('new_ranking', :tag_id => @tag)
 
-= render_movie(@movie, :id => 'movie_to_rank', :value => @movie.id)
+= render_movie(@movie, :id => 'movie_to_rank', :movie_id => @movie.id, :tag_id => @tag.try(:id))
 
 #is is
 
