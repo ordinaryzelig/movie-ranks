@@ -67,4 +67,12 @@ class RankingsControllerTest < ActionController::TestCase
     assert Ranking.find_by_user_id_and_movie_id(user, movie)
   end
   
+  def test_attempt_to_rank_movie_again_redirects_to_index
+    user = User.make
+    login_as user
+    ranking = user.rankings.make
+    get :new, :movie_id => ranking.movie.to_param
+    assert_redirected_to user_rankings_path(user)
+  end
+  
 end

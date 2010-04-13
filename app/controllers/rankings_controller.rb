@@ -12,8 +12,13 @@ class RankingsController < ApplicationController
   
   def new
     if @movie
-      if first_ranking?
+      user_rankings = logged_in_user.rankings.for_tag(@tag)
+      is_first_ranking = user_rankings.empty?
+      if is_first_ranking
         create_from_attributes(:movie => @movie, :tag => @tag)
+      else
+        already_ranked = user_rankings.map(&:movie_id).include?(@movie.id)
+        redirect_to @tag ? tag_user_rankings(@tag, logged_in_user) : user_rankings_path(logged_in_user) if already_ranked
       end
     else
       render :template => 'movies/index'
@@ -43,10 +48,6 @@ class RankingsController < ApplicationController
       end
       if_format_is.js { render :nothing => true }
     end
-  end
-  
-  def first_ranking?
-    logged_in_user.rankings.for_tag(@tag).empty?
   end
   
 end
