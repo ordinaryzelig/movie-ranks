@@ -1,11 +1,11 @@
 [
-  {:imdb_id=>"tt0109040", :year=>1994, :title=>"Ace Ventura: Pet Detective", :tags => ['comedy',]},
+  {:imdb_id=>"tt0109040", :year=>1994, :title=>"Ace Ventura: Pet Detective", :tags => ['comedy', 'jim carrey']},
   {:imdb_id=>"tt0457655", :year=>2006, :title=>"After the Wedding"},
   {:imdb_id=>"tt0042192", :year=>1951, :title=>"All About Eve"},
   {:imdb_id=>"tt0181875", :year=>2000, :title=>"Almost Famous"},
-  {:imdb_id=>"tt0343135", :year=>2004, :title=>"Along Came Polly", :tags => ['comedy',]},
+  {:imdb_id=>"tt0343135", :year=>2004, :title=>"Along Came Polly", :tags => ['comedy','ben stiller']},
   {:imdb_id=>"tt0169547", :year=>1999, :title=>"American Beauty"},
-  {:imdb_id=>"tt0075686", :year=>1977, :title=>"Annie Hall", :tags => ['comedy',]},
+  {:imdb_id=>"tt0075686", :year=>1977, :title=>"Annie Hall", :tags => ['comedy', 'woody allen', 'new york']},
   {:imdb_id=>"tt0106308", :year=>1993, :title=>"Army of Darkness", :tags => ['comedy',]},
   {:imdb_id=>"tt0449467", :year=>2006, :title=>"Babel"},
   {:imdb_id=>"tt0372784", :year=>2005, :title=>"Batman Begins"},
@@ -122,6 +122,7 @@
 end
 
 me = User.create! :name => 'jared'
+me.update_attribute :is_admin, true
 
 # rank first 20 movies.
 Movie.all(:order => 'created_at', :limit => 20).each do |movie|

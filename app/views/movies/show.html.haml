@@ -1,0 +1,17 @@
+/ tags, imdb link, picture?, link to rank
+= render @movie
+
+%dl#tags
+  %dt= 'tags:'
+  - @movie.tags.each do |tag|
+    %dd= link_to tag.name, tag_movies_path(tag)
+  - if admin?
+    %dd
+      - form_tag tag_movie_path(@movie), :method => :post do
+        add
+        %br
+        = select_tag :tag_ids, options_from_collection_for_select(Tag.all - @movie.tags, :id, :name), :multiple => true
+        %br
+        new tags:
+        = text_field_tag :new_tags
+        = submit_tag :add

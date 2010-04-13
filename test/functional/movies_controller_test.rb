@@ -34,4 +34,22 @@ class MoviesControllerTest < ActionController::TestCase
     assert_equal [movie], assigns(:movies)
   end
   
+  def test_tag_with_existing_tags
+    login_as User.make
+    movie = Movie.make
+    tags = 2.times.map { Tag.make }
+    post :tag, :id => movie.to_param, :tag_ids => tags.map(&:id)
+    movie.reload
+    assert tags.all? { |tag| movie.tags.include?(tag) }
+  end
+  
+  def test_tag_with_new_tags
+    login_as User.make
+    movie = Movie.make
+    new_tags = ['new tag 1', 'new tag 2']
+    post :tag, :id => movie.to_param, :new_tags => new_tags.join(', ')
+    movie.reload
+    assert new_tags.all? { |tag| movie.tags.map(&:name).include?(tag) }
+  end
+  
 end

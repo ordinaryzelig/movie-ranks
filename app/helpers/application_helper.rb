@@ -25,4 +25,8 @@ module ApplicationHelper
     render(:partial => 'movies/movie', :object => movie, :locals => {:options => options})
   end
   
+  def admin?
+    logged_in_user.try(:is_admin)
+  end
+  
 end

@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.root :controller => :rankings, :action => :new
   
-  map.resources :movies, :only => [:create, :index], :collection => {:search => :get} do |movie|
+  map.resources :movies, :only => [:create, :index, :show], :collection => {:search => :get}, :member => {:tag => :post} do |movie|
     movie.resources :rankings, :only => [:new]
   end
   

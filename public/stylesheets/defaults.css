@@ -13,7 +13,8 @@ button {
   border-style: solid;
   border-width: 1px 3px 3px 1px;
   border-color: gray black black gray;
-  margin: 2mm; }
+  margin: 2mm;
+  font-size: 1em; }
 
 button:active {
   border-color: black gray gray black;

@@ -1,0 +1,12 @@
+.movie {
+  text-align: center; }
+  .movie .title {
+    font-size: 2em;
+    font-weight: bold; }
+
+button#add {
+  color: white;
+  background: green; }
+
+#tags dt {
+  font-size: 1.25em; }
