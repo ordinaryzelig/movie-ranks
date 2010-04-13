@@ -14,6 +14,7 @@ class Ranking < ActiveRecord::Base
   
   validates_presence_of :movie_id
   validates_presence_of :user_id
+  validates_uniqueness_of :movie_id, :scope => [:user_id, :tag_id]
   
   after_create :insert_at_position_requested, :if => :position_requested
   

@@ -30,4 +30,9 @@ class RankingTest < ActiveSupport::TestCase
     end
   end
   
+  def test_validates_uniqueness_of_movie_id
+    ranking = Ranking.make
+    assert_raises(ActiveRecord::RecordInvalid) { ranking.clone.save! }
+  end
+  
 end

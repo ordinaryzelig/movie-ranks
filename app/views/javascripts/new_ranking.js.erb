@@ -43,6 +43,8 @@ function add_ajax_to_better_worse_links() {
 function do_comparison(comparison, event) {
   event.preventDefault();
   if (rankings.length == 1 || (rankings.length == 2 && comparison == worse)) {
+    $("#better").attr("disabled", true);
+    $("#worse").attr("disabled", true);
     var position_requested;
     switch(comparison) {
       case better:
@@ -77,8 +79,6 @@ function do_comparison(comparison, event) {
   }
 }
 
-// TODO: disable links so they don"t submit again.
-// TODO: disable links to make sure we"re not making any unnecessary redirect requests after creation.
 function create_ranking (position_requested) {
   var movie_to_rank = $("#movie_to_rank");
   $.post("/rankings", { ranking: {movie_id: movie_to_rank.attr("movie_id"), tag_id: movie_to_rank.attr("tag_id"), position_requested: position_requested} });
