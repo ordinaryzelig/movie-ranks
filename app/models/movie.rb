@@ -1,7 +1,8 @@
 class Movie < ActiveRecord::Base
   
   has_many :rankings, :extend => ArrayBinary
-  has_and_belongs_to_many :tags
+  has_and_belongs_to_many :tags, :after_add => proc { |movie, tag| movie.send(:create_ranking_average, tag) }
+  has_many :ranking_averages
   
   attr_accessor :is_mock
   
@@ -11,6 +12,8 @@ class Movie < ActiveRecord::Base
   
   validates_presence_of :title
   validates_presence_of :imdb_id
+  
+  after_create :create_ranking_average
   
   # wrapper for Imdb.search_movies_by_title that always returns an array.
   def self.search_imdb(title)
@@ -54,6 +57,12 @@ class Movie < ActiveRecord::Base
       end
     end
     
+  end
+  
+  private
+  
+  def create_ranking_average(tag = nil)
+    ranking_averages.create!(:tag => tag)
   end
   
 end

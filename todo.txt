@@ -1,2 +1,4 @@
 here:
-    movies/show overall rankings
+    total rankings
+foreign keys
+followers

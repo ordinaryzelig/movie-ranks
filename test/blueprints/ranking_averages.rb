@@ -1,0 +1,2 @@
+RankingAverage.blueprint do
+end

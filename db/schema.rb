@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100331034226) do
+ActiveRecord::Schema.define(:version => 20100415033526) do
 
   create_table "movies", :force => true do |t|
     t.string   "title",      :null => false
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(:version => 20100331034226) do
     t.integer  "tag_id"
     t.datetime "created_at"
   end
+
+  create_table "ranking_averages", :force => true do |t|
+    t.integer  "percentile"
+    t.integer  "movie_id"
+    t.integer  "tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ranking_averages", ["movie_id", "tag_id"], :name => "index_ranking_averages_on_movie_id_and_tag_id", :unique => true
+  add_index "ranking_averages", ["percentile"], :name => "index_ranking_averages_on_percentile"
 
   create_table "rankings", :force => true do |t|
     t.integer  "movie_id",   :null => false
