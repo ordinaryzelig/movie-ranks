@@ -29,4 +29,23 @@ module ApplicationHelper
     logged_in_user.try(:is_admin)
   end
   
+  def score_for(ranking)
+    render :partial => 'rankings/score', :locals => {:ranking => ranking}
+  end
+  
+  def link_to_new_ranking(string, options = {})
+    tag = options.delete(:tag)
+    movie = options.delete(:movie)
+    path = tag ? new_tag_movie_ranking_path(tag, movie) : new_movie_ranking_path(movie)
+    link_to string, path
+  end
+  
+  def score_or_link_to_new_ranking(ranking, options = {})
+    if ranking
+      score_for ranking
+    else
+      link_to_new_ranking 'rank it', options
+    end
+  end
+  
 end

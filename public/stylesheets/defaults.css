@@ -20,3 +20,14 @@ button:active {
   border-color: black gray gray black;
   border-width: 2px 2px 2px 2px;
   padding: 6px 6px 4px 4px; }
+
+table.centered {
+  margin: auto; }
+
+tr.header {
+  background: lightgray; }
+  tr.header th {
+    font-weight: bold; }
+
+.score_ordinal {
+  font-size: 80%; }

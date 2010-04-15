@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20100331034226) do
     t.integer  "user_id",    :null => false
     t.integer  "tag_id"
     t.integer  "position"
+    t.integer  "percentile"
     t.datetime "created_at"
   end
 

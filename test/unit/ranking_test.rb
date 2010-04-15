@@ -35,4 +35,18 @@ class RankingTest < ActiveSupport::TestCase
     assert_raises(ActiveRecord::RecordInvalid) { ranking.clone.save! }
   end
   
+  def test_percentile_calculated
+    user = User.make
+    9.times { user.rankings.make }
+    ranking = user.rankings.make(:position_requested => 2)
+    assert_equal 90, ranking.percentile
+  end
+  
+  def test_calculate_percentiles!
+    user = User.make
+    10.times { user.rankings.make }
+    user.rankings.reload
+    assert_equal (1..10).map { |i| i * 10 }.reverse, user.rankings.map(&:percentile)
+  end
+  
 end

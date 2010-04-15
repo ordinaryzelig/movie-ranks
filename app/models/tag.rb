@@ -2,6 +2,8 @@ class Tag < ActiveRecord::Base
   
   has_and_belongs_to_many :movies
   
+  named_scope :by_name, :order => :name
+  
   def to_param
     name
   end

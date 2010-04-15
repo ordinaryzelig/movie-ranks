@@ -1,2 +1,2 @@
 here:
-    movies/show
+    movies/show overall rankings

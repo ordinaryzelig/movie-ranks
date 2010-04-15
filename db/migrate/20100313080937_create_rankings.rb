@@ -6,8 +6,9 @@ class CreateRankings < ActiveRecord::Migration
       t.belongs_to :user, :null => false
       t.belongs_to :tag
       t.integer :position
-      # updated at would make acts_as_list slower than necessary.
+      t.integer :percentile
       t.datetime :created_at
+      # updated at would make acts_as_list slower than necessary.
     end
   end
   

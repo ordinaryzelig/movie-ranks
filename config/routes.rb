@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
     movie.resources :rankings, :only => [:new]
   end
   
-  map.resources :rankings
+  map.resources :rankings, :only => :create
   
   map.resources :users do |user|
     user.resources :rankings, :only => [:index]

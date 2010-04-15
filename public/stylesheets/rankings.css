@@ -27,3 +27,7 @@
 
 #worse {
   background: red; }
+
+table#rankings th {
+  text-align: right;
+  padding-right: 2mm; }

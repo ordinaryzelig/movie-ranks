@@ -81,9 +81,15 @@ function do_comparison(comparison, event) {
 
 function create_ranking (position_requested) {
   var movie_to_rank = $("#movie_to_rank");
-  $.post("/rankings", { ranking: {movie_id: movie_to_rank.attr("movie_id"), tag_id: movie_to_rank.attr("tag_id"), position_requested: position_requested} });
   <% redirect_path = @tag ? user_tag_rankings_path(logged_in_user, @tag) : user_rankings_path(logged_in_user) %>
-  window.location.replace("<%= redirect_path %>");
+  $.ajax({
+    url: "/rankings",
+    type: "post",
+    data: {ranking: {movie_id: movie_to_rank.attr("movie_id"), tag_id: movie_to_rank.attr("tag_id"), position_requested: position_requested}},
+    success: function(msg){
+      window.location.replace("<%= redirect_path %>");
+    }
+  });
 }
 
 $(document).ready(function(){

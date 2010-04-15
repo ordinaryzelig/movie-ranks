@@ -1,17 +1,31 @@
-/ tags, imdb link, picture?, link to rank
 = render @movie
 
-%dl#tags
-  %dt= 'tags:'
+- if logged_in_user
+  #ranking_overall
+    you ranked it:
+    %span.ranking.overall= score_or_link_to_new_ranking logged_in_user.rankings.for_movie(@movie).for_tag(nil).first, :movie => @movie
+
+%table#tags.centered
+  %caption tags
+  %tr.header
+    %th name
+    - if logged_in_user
+      %th your ranking
   - @movie.tags.each do |tag|
-    %dd= link_to tag.name, tag_movies_path(tag)
-  - if admin?
-    %dd
-      - form_tag tag_movie_path(@movie), :method => :post do
-        add
-        %br
-        = select_tag :tag_ids, options_from_collection_for_select(Tag.all - @movie.tags, :id, :name), :multiple => true
-        %br
-        new tags:
-        = text_field_tag :new_tags
-        = submit_tag :add
+    %tr
+      %td= link_to tag.name, tag_movies_path(tag)
+      - if logged_in_user
+        - ranking_for_tag = logged_in_user.rankings.for_tag(tag).for_movie(@movie).first
+        %td.ranking
+          = score_or_link_to_new_ranking ranking_for_tag, {:tag => tag, :movie => @movie}
+
+- if admin?
+  #add_tags
+    add tags
+    - form_tag tag_movie_path(@movie), :method => :post do
+      = select_tag :tag_ids, options_from_collection_for_select(Tag.by_name - @movie.tags, :id, :name), :multiple => true
+      %br
+      new tags (comma separated):
+      = text_field_tag :new_tags
+      %br
+      = submit_tag :add

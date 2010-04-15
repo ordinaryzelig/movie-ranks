@@ -2,7 +2,7 @@
 
 - if @movies
   - @movies.each do |movie|
-    - content = movie.title
+    - content = h(movie.title)
     - content += " (#{movie.year})" if movie.year
     = link_to_create_or_show_movie content, movie
     %br

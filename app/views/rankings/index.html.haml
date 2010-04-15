@@ -1,2 +1,5 @@
-- @rankings.each do |rank|
-  = render rank
+%table#rankings.centered
+  - @rankings.each do |ranking|
+    %tr
+      %th.header= "#{ranking.rank}."
+      %td= link_to h(ranking.movie.title), ranking.movie

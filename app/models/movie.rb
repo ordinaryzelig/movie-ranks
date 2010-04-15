@@ -38,6 +38,10 @@ class Movie < ActiveRecord::Base
     create! imdb_movie.attributes_for(:title, :imdb_id, :year)
   end
   
+  def imdb_path
+    "http://www.imdb.com/title/#{imdb_id}/"
+  end
+  
   class << self
     
     private
